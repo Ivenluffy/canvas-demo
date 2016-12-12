@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        window.onload=function() {
+            var cvs = document.getElementById("canvas");
+            var delta=0;
+            setInterval(draw,30);
+            function draw(){
+                var lineWidth=50;
+                var cx=cvs.width/2;
+                var cy=cvs.height/2;
+                var r=Math.min(cvs.width/2,cvs.height/2)-lineWidth/2;
+                var angelArr=[70,35,90,66,100,30];
+                var params=Math.PI/180;
+                var colorArr=["blue","red","orange","purple","green","yellow"];
+                if (cvs.getContext) {
+                    var ctx = cvs.getContext("2d");
+                } else {
+                    alert("不支持canvas");
+                    return;
+                }
+                ctx.beginPath();
+                ctx.arc(cx,cy,r,0,Math.PI*2);
+                ctx.lineWidth=lineWidth;
+                ctx.strokeStyle="#ccc";
+                ctx.stroke();
+                var starAngle=0+delta;
+                for(var i=0;i<colorArr.length;i++){
+                    var endAngle=starAngle+angelArr[i];
+                    ctx.beginPath();
+                    ctx.arc(cx,cy,r,starAngle*params,endAngle*params);
+                    ctx.strokeStyle=colorArr[i];
+                    ctx.stroke();
+                    starAngle=endAngle;
+                }
+                delta+=1;
+            }
+        }
+    </script>
+</head>
+<body>
+<div style="width:600px;margin:50px auto;">
+    <canvas id="canvas" width="500" height="500" >You browser dose not support the HTML5 canvas tag</canvas>
+</div>
+</body>
+</html>
